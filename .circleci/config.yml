@@ -1,5 +1,5 @@
 version: 2
-jobs:      
+jobs:
   deploy:
     docker:
       - image: circleci/php:7.1.5-browsers
@@ -10,16 +10,14 @@ jobs:
       - checkout
 
       - run: 
-          name: Deploy Staging Branch
+          name: Deploy Master Branch
           command: |
             sudo apt-get update
             sudo apt-get -qq install git-ftp
             echo "Deploying project ..."
             echo $(git status)
-            run: npm install
-            npx gulp build
-            node .circleci/deploy.js
-            
+            git ftp init --init-if-not-exist --user "sigephom" --passwd "Mr367774@" cwp.erpsigep.com.br
+
 workflows:
   version: 2
   just-deploy:
@@ -27,4 +25,4 @@ workflows:
       - deploy:
           filters:
             branches:
-              only: staging
+              only: master
