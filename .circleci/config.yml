@@ -16,7 +16,7 @@ jobs:
             sudo apt-get -qq install git-ftp
             echo "Deploying project ..."
             echo $(git status)
-            - run: npm install
+            run: npm install
             npx gulp build
             node .circleci/deploy.js
             
