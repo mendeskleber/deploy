@@ -1,21 +1,30 @@
 version: 2
-jobs:
-   build:
-     docker:
-       - image: circleci/node:latest
-     steps:
-       - checkout
-       - run: npm install
-       - run: npx gulp build
-       - run: node .circleci/deploy.js
-       - run: echo "WE'RE ONLINE"
+jobs:      
+  deploy:
+    docker:
+      - image: circleci/php:7.1.5-browsers
 
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run: 
+          name: Deploy Staging Branch
+          command: |
+            sudo apt-get update
+            sudo apt-get -qq install git-ftp
+            echo "Deploying project ..."
+            echo $(git status)
+            - run: npm install
+            npx gulp build
+            node .circleci/deploy.js
+            
 workflows:
   version: 2
-  deploy:
+  just-deploy:
     jobs:
-      - build:
+      - deploy:
           filters:
             branches:
-              only:
-                - master
+              only: staging
