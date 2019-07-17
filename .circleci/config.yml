@@ -12,10 +12,10 @@ jobs:
       - run: 
           name: Deploy Master Branch
           command: |
-            sudo apt-get update
-            sudo apt-get -qq install git-ftp
-            run: node .circleci/deploy.js
-            run: echo "WE'RE ONLINE"
+            -sudo apt-get update
+            -sudo apt-get -qq install git-ftp
+            -run: node .circleci/deploy.js
+            -run: echo "WE'RE ONLINE"
 workflows:
   version: 2
   just-deploy:
