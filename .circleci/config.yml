@@ -24,6 +24,15 @@ jobs:
 
       - run: yarn install
 
+      - run: 
+          name: Deploy Master Branch
+          command: |
+            -sudo apt-get update
+            -sudo apt-get -qq install git-ftp
+            -run: node .circleci/deploy.js
+            -run: echo "WE'RE ONLINE"
+
+
       - save_cache:
           paths:
             - node_modules
